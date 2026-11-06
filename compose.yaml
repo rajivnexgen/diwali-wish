@@ -1,0 +1,17 @@
+services:
+  diwali:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: diwali-gift-site:local
+    container_name: diwali-gift-site
+    restart: unless-stopped
+    networks:
+      - npm_proxy
+    # No host ports are published. Nginx Proxy Manager reaches this
+    # container over the existing shared Docker network on port 80.
+
+networks:
+  npm_proxy:
+    external: true
+    name: ${NPM_NETWORK:?Set NPM_NETWORK in .env to the Docker network used by Nginx Proxy Manager}
