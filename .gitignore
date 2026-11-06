@@ -1,0 +1,9 @@
+# Docker environment & secrets are configured only on the VPS.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.pub
+.DS_Store
+__pycache__/
