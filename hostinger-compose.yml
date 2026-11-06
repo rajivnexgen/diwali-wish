@@ -1,0 +1,7 @@
+services:
+  diwali:
+    image: ghcr.io/rajivnexgen/diwali-wish:latest
+    container_name: diwali-gift-site
+    restart: unless-stopped
+    # No public ports; attach this container to the existing
+    # Nginx Proxy Manager network after first deployment.
