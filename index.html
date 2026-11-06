@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#101f1c" />
+  <meta name="description" content="A personal Diwali greeting and a little festive surprise." />
+  <title>A Little Light, Just for You | Happy Diwali</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #10211d;
+      --pine: #10231e;
+      --pine-light: #1c322a;
+      --cream: #f6efe0;
+      --muted: #bbbdab;
+      --gold: #f0be6a;
+      --gold-soft: #d5a662;
+      --copper: #ae6245;
+      --line: rgba(235, 205, 143, .24);
+      --sans: 'Manrope', 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --serif: 'Playfair Display', Georgia, serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      min-height: 100svh;
+      background: var(--pine);
+      color: var(--cream);
+      font-family: var(--sans);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    button:focus-visible, input:focus-visible, a:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+    ::selection { background: #deb36d; color: #14201c; }
+    .page {
+      isolation: isolate;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      min-height: 100svh;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse 47% 54% at 78% 49%, rgba(132, 88, 37, .19), transparent 75%),
+        radial-gradient(ellipse 39% 37% at 19% 101%, rgba(42, 91, 61, .25), transparent 75%),
+        linear-gradient(112deg, #12241f 0%, #11211d 53%, #0c1917 100%);
+    }
+    .page::before {
+      content: '';
+      z-index: -1;
+      position: absolute;
+      inset: 0;
+      opacity: .36;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.16'/%3E%3C/svg%3E");
+      mix-blend-mode: soft-light;
+    }
+    .page::after {
+      content: '';
+      position: absolute;
+      width: 420px; height: 420px;
+      border: 1px solid rgba(237,197,133,.11);
+      transform: rotate(45deg);
+      right: -290px; bottom: -280px;
+      pointer-events: none;
+    }
+    .topline {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 28px clamp(24px, 5.2vw, 88px) 0;
+      gap: 24px;
+      position: relative; z-index: 8;
+    }
+    .brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: var(--cream); }
+    .brand-symbol { width: 28px; height: 28px; flex: 0 0 auto; }
+    .brand-name { display: flex; flex-direction: column; gap: 2px; }
+    .brand-name strong { font-size: 14px; line-height: 1; letter-spacing: .22em; font-weight: 800; }
+    .brand-name span { font-size: 8px; font-weight: 700; letter-spacing: .31em; color: #ceb78e; }
+    .header-right { display:flex; align-items:center; gap:22px; }
+    .edition { color: #d4c6ab; text-transform: uppercase; font-size: 9px; letter-spacing: .23em; font-weight: 700; }
+    .preview-trigger {
+      border: 1px solid var(--line); background: rgba(255,255,255,.035); color: #eee1c9;
+      display: inline-flex; align-items:center; gap: 8px;
+      border-radius: 100px; padding: 10px 15px;
+      font-size: 10px; font-weight: 700; letter-spacing: .08em;
+      transition: background .2s ease, border-color .2s ease;
+    }
+    .preview-trigger:hover { border-color: #b6925b; background: rgba(255,255,255,.065); }
+    .preview-trigger svg { width: 13px; height: 13px; }
+    .main {
+      width: min(100%, 1650px);
+      margin: auto;
+      position: relative;
+      display:grid;
+      grid-template-columns: minmax(0, .99fr) minmax(0, 1.01fr);
+      align-items: center;
+      gap: clamp(15px, 2.2vw, 40px);
+      padding: 43px clamp(24px, 8.4vw, 145px) 35px;
+      flex: 1;
+    }
+    .copy { position:relative; z-index: 5; padding-top: 5px; }
+    .eyebrow { display:flex; align-items:center; gap: 14px; margin-bottom: 34px; color: #d6b57a; font-size: 10px; font-weight: 700; letter-spacing: .29em; text-transform: uppercase; }
+    .eyebrow::before { content: ''; width: 30px; height: 1px; background: #d3a56c; }
+    .hello { font-family: var(--serif); color: #f5e8d2; font-size: clamp(23px, 2.55vw, 35px); letter-spacing: -.018em; margin: 0 0 8px; font-weight: 500; }
+    h1 { font-family: var(--serif); margin:0; font-weight: 500; font-size: clamp(68px, 7.45vw, 115px); line-height: .99; letter-spacing: -.058em; }
+    h1 span { display:block; }
+    h1 .golden { color: var(--gold); font-style: italic; font-weight: 500; letter-spacing: -.065em; }
+    .desc { max-width: 490px; color: #c9c7b5; font-size: clamp(12.5px, 1.06vw, 15px); line-height: 1.95; margin: 25px 0 29px; font-weight: 400; }
+    .divider { width: 100%; max-width: 493px; height: 1px; background: linear-gradient(90deg, var(--line), transparent); margin-bottom: 25px; }
+    .gift-area { max-width: 500px; display:flex; align-items:center; gap: 19px; }
+    .gift-icon { width: 51px; height: 51px; border: 1px solid rgba(242,192,105,.4); border-radius: 15px; flex: 0 0 auto; display:grid; place-items:center; background: rgba(240,190,106,.07); color: var(--gold); }
+    .gift-icon svg { width: 24px; height: 24px; stroke-width: 1.5; }
+    .gift-copy { min-width:0; flex:1; }
+    .gift-copy strong { display:block; font-size: 13px; font-weight: 700; margin-bottom: 6px; color: #f6ecda; }
+    .gift-copy p { margin:0; font-size: 11px; line-height: 1.65; color: #bfbca8; }
+    .gift-cta {
+      display:inline-flex; justify-content:center; align-items:center; gap:12px;
+      min-height: 52px; padding: 0 22px;
+      border: 1px solid #e1ad69; background: #f0bd72;
+      color: #202318; white-space:nowrap;
+      border-radius: 6px; font-size: 12px; font-weight: 800;
+      box-shadow: 0 8px 27px rgba(192, 124, 51, .14);
+      transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+    }
+    .gift-cta:hover { transform: translateY(-3px); background:#ffd08b; box-shadow: 0 13px 32px rgba(192, 124, 51, .25); }
+    .gift-cta svg { width: 16px; height: 16px; transition: transform .2s ease; }
+    .gift-cta:hover svg { transform: translateX(3px); }
+    .art { position:relative; display:flex; justify-content:center; align-items:center; aspect-ratio: 1; width:100%; min-width:0; transform: translate(3%, -1%); }
+    .art-halo { width: 87%; height: 87%; position:absolute; border-radius:50%; background: radial-gradient(circle, rgba(202,122,55,.115) 0%, rgba(188,119,62,.07) 39%, transparent 70%); filter: blur(20px); animation: breathe 8s ease-in-out infinite alternate; }
+    .art-svg { width: 100%; height:100%; overflow:visible; z-index:2; filter: drop-shadow(0 25px 35px rgba(0,0,0,.13)); }
+    .inner-glow { animation: breathe 4.5s ease-in-out infinite alternate; transform-origin: 50% 49%; }
+    .flame-wrap { transform-origin: 320px 273px; animation: flame 3.25s ease-in-out infinite alternate; }
+    .art-orbit { animation: slowspin 60s linear infinite; transform-origin: 320px 320px; }
+    .small-stars { animation: shimmer 5s ease-in-out infinite alternate; }
+    .art-caption { position:absolute; right:0; bottom: 7%; display:flex; align-items:center; gap:9px; color:#d2bd8b; text-transform:uppercase; font-size: 9px; font-weight:700; letter-spacing:.18em; white-space:nowrap; }
+    .art-caption i { display:block; width: 19px; height:1px; background:#a58a5e; }
+    .hangers { pointer-events:none; position:absolute; z-index:1; left:0; right:0; top:0; height: 190px; overflow:hidden; }
+    .hanging { position:absolute; top:0; width:1px; height:var(--length); background:linear-gradient(to bottom, rgba(240,188,105,.33), rgba(240,188,105,.10)); transform-origin:top center; animation: sway var(--duration) ease-in-out infinite alternate; }
+    .hanging::before { content:''; width:5px; height:5px; position:absolute; bottom:-2px; left:-2px; transform:rotate(45deg); border:1px solid #b79055; background: #e8b76e; box-shadow:0 0 13px #efb66988; }
+    .hanging::after { content:''; position:absolute; left:-8px; bottom:-17px; width:16px; height:16px; border:1px solid rgba(240,188,105,.30); border-radius:50%; }
+    .h1 { left:63%; --length:106px; --duration:5s; }
+    .h2 { left:72%; --length:64px; --duration:6.7s; animation-delay:-2s; }
+    .h3 { left:89%; --length:115px; --duration:6s; animation-delay:-4s; }
+    .h4 { left:96%; --length:72px; --duration:5.6s; animation-delay:-1s; }
+    .sparkle-field { position:absolute; inset:0; overflow:hidden; pointer-events:none; z-index:1; }
+    .sparkle { position:absolute; left:var(--x); top:var(--y); width:var(--s); height:var(--s); border-radius:50%; background:#f7c67c; opacity:0; box-shadow:0 0 11px 2px rgba(254,186,102,.32); animation: twinkle var(--t) ease-in-out infinite; animation-delay:var(--d); }
+    .sparkle.cross::after,.sparkle.cross::before { content:''; position:absolute; background:#e8ba75; opacity:.6; }
+    .sparkle.cross::before { width:1px; height:12px; left:calc(50% - .5px); top:calc(50% - 6px); }
+    .sparkle.cross::after { width:12px; height:1px; left:calc(50% - 6px); top:calc(50% - .5px); }
+    .bottomline {
+      position:relative; z-index:5;
+      border-top:1px solid rgba(232,205,163,.14);
+      margin:0 clamp(24px, 5.2vw, 88px);
+      padding:20px 0 24px;
+      display:flex; align-items:center; justify-content:space-between; gap:20px;
+    }
+    .wish { font-family:var(--serif); font-size: 13px; font-style:italic; color:#dec49a; letter-spacing:.005em; }
+    .footer-note { color:#9fa596; font-size: 9px; font-weight: 700; letter-spacing:.16em; text-transform:uppercase; }
+    /* Gift reveal */
+    .overlay { position:fixed; inset:0; z-index:99; background:rgba(4,11,10,.76); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); display:flex; justify-content:center; align-items:center; padding:20px; opacity:0; visibility:hidden; transition:opacity .25s ease, visibility .25s; }
+    .overlay.open, #giftOverlay:target { opacity:1; visibility:visible; pointer-events:auto; }
+    .overlay { pointer-events:none; overflow-y:auto; -webkit-overflow-scrolling:touch; }
+    .dialog { margin:auto; }
+    .redeem[hidden] { display:none !important; }
+    #giftOverlay:target .voucher { animation: cardReveal .53s cubic-bezier(.2,.8,.2,1) both; }
+    @keyframes cardReveal { from { opacity:.35; transform:translateY(15px) scale(.96); } to { opacity:1; transform:translateY(0) scale(1); } }
+    .dialog { position:relative; width:min(100%, 480px); padding: 34px; border:1px solid rgba(221,181,116,.34); border-radius:15px; background:linear-gradient(155deg,#1d3028,#12221e 65%); box-shadow: 0 35px 90px rgba(0,0,0,.4); transform:translateY(16px) scale(.98); transition:transform .3s ease; text-align:center; }
+    .overlay.open .dialog { transform:translateY(0) scale(1); }
+    .close { text-decoration:none; position:absolute; top:15px; right:15px; width:35px; height:35px; display:grid;place-items:center;border:1px solid rgba(255,255,255,.16);border-radius:50%;background:transparent;color:#f3e5ce; }
+    .close:hover { background:rgba(255,255,255,.10); }
+    .close svg { width:16px; height:16px; }
+    .modal-kicker { text-transform:uppercase; font-size:10px; color:var(--gold);letter-spacing:.28em;font-weight:800;margin:6px 0 8px; }
+    .dialog h2 { margin:0; color:#f6ead7; font:500 39px/1.22 var(--serif); letter-spacing:-.045em; }
+    .dialog h2 em { color:var(--gold); }
+    .dialog-description { color:#c1bead; font-size:12px;line-height:1.85;margin:14px auto 24px;max-width:330px; }
+    .voucher { position:relative; overflow:hidden; border-radius:12px; background: #f3e7d2; color:#26312b; min-height:182px; text-align:left; padding:22px 24px; box-shadow:0 14px 35px rgba(0,0,0,.16); }
+    .voucher::before { content:''; position:absolute; right:-64px; bottom:-122px; width:300px; height:300px;border:42px solid #e9ad61;border-radius:50%;opacity:.55; }
+    .voucher::after { content:''; position:absolute; right:31px; top:-82px; width:150px; height:150px; border:1px solid rgba(148,81,46,.22); border-radius:50%; }
+    .voucher-top { position:relative;z-index:1;display:flex;justify-content:space-between;align-items:center;gap:10px; }
+    .voucher-label { font-size:13px; letter-spacing:-.04em;font-weight:800; }
+    .voucher-tag { font-size:8px;font-weight:800;text-transform:uppercase;letter-spacing:.18em;color:#995f3d; }
+    .voucher-main { position:relative;z-index:1;margin-top:32px;font:500 32px/1.2 var(--serif);letter-spacing:-.04em; }
+    .voucher-bottom { position:relative;z-index:1;font-size:10px;margin-top:10px;color:#705d4e;font-weight:600; }
+    .redeem { margin:21px 0 9px; width:100%; min-height:51px; }
+    .demo-hint { color:#a9b0a0;font-size:10px; line-height:1.7; max-width:370px; margin:8px auto 0; }
+    .editor-overlay { z-index:100; }
+    .editor-dialog { width:min(100%,410px);text-align:left; }
+    .editor-dialog h2 { font-size:29px; }
+    .editor-dialog label {display:block;color:#f5e3c7;font-size:11px;font-weight:700;margin:24px 0 9px;}
+    .name-input {width:100%;background:#0f211c;color:#f5ead9;border:1px solid #65766b;border-radius:6px;padding:13px 14px;outline:none;font-size:14px;}
+    .name-input:focus{border-color:var(--gold);}
+    .editor-actions {display:flex;gap:10px;margin-top:17px;}
+    .editor-actions .gift-cta{flex:1;}
+    .secondary {flex:1;border-radius:6px;border:1px solid var(--line);background:rgba(255,255,255,.045);color:#f2e6d6;font-size:12px;font-weight:700;padding:10px;}
+    .secondary:hover {background:rgba(255,255,255,.095);}
+    .toast { position:fixed;z-index:120;left:50%;bottom:30px;transform:translate(-50%,18px);background:#f5e5c8;color:#1a2922;border-radius:8px;padding:12px 18px;box-shadow:0 15px 40px #0005;font-size:12px;font-weight:700;opacity:0;pointer-events:none;transition:all .24s ease;text-align:center;max-width:calc(100vw - 28px); }
+    .toast.show {transform:translate(-50%,0);opacity:1;}
+    @keyframes twinkle {0%,100%{opacity:0;transform:scale(.4)} 45%{opacity:.62;transform:scale(1)} 70%{opacity:.2;transform:scale(.65)}}
+    @keyframes sway {to{transform:rotate(4deg)}}
+    @keyframes flame {0%{transform:rotate(-2.3deg) scaleX(.985)}50%{transform:rotate(1deg) scaleX(1.015)}100%{transform:rotate(2.7deg) scaleX(.99)}}
+    @keyframes breathe {to{opacity:.68;transform:scale(1.045)}}
+    @keyframes slowspin {to{transform:rotate(360deg)}}
+    @keyframes shimmer {to{opacity:.47}}
+    @media (max-width: 1100px) {
+      .main { padding-left:6.3vw; padding-right:6.3vw; }
+      h1 { font-size:clamp(60px,7.2vw,95px); }
+      .art { transform:translate(1%,0); }
+      .gift-area { gap:13px;flex-wrap:wrap; }
+      .gift-cta { min-height:47px;padding:0 16px; }
+    }
+    @media (max-width: 740px) {
+      .topline {padding:22px 24px 0;}
+      .edition {display:none;}
+      .preview-trigger {padding:9px 12px;}
+      .main {display:flex;flex-direction:column;gap:0;padding: 44px 27px 50px;align-items:stretch;}
+      .copy {order:1;}
+      .eyebrow {margin-bottom:23px;font-size:9px;}
+      .hello {font-size:26px;}
+      h1 {font-size:clamp(70px,13.2vw,94px);}
+      .desc {max-width:450px;font-size:13px;line-height:1.85;margin:21px 0 25px;}
+      .divider {margin-bottom:23px;}
+      .gift-area {max-width:470px;gap:13px;}
+      .gift-icon {width:48px;height:48px;}
+      .gift-copy {min-width:180px;}
+      .gift-cta {width:100%;margin-top:9px;}
+      .art {order:2; width:min(100%,440px);align-self:center;margin-top:28px;transform:none;}
+      .art-caption {right:4%;bottom:2%;}
+      .hangers {opacity:.6;}
+      .h1 {left:76%;}.h2{left:85%;}.h3{display:none}.h4{display:none}
+      .bottomline {margin:0 24px;padding:17px 0 22px;align-items:flex-start;flex-direction:column;gap:9px;}
+    }
+    @media (max-width:380px) { .main {padding-left:20px;padding-right:20px;} h1{font-size:66px;} .brand-name strong{font-size:11px;} .brand-name span{font-size:7px;} .brand-symbol{width:24px;} .gift-copy{min-width:145px;} .dialog{padding:29px 20px;} }
+    @media (max-width:740px) {
+      /* Prevent a tall reveal from being clipped on compact phone screens. */
+      .overlay { align-items:flex-start; padding:14px; }
+      #giftOverlay .dialog { max-height:none; margin:auto; }
+    }
+    @media (prefers-reduced-motion:reduce) {
+      *,*::before,*::after { animation-duration:.001ms !important; animation-iteration-count:1 !important; scroll-behavior:auto !important; transition-duration:.001ms !important; }
+    }
+
+
+    /* Opening/closing is a checkbox state change, never an anchor jump.
+       Works in mobile HTML viewers even if they block JavaScript. */
+    .gift-toggle {
+      position: fixed; top: 0; left: 0; width: 1px; height: 1px;
+      opacity: 0; pointer-events: none;
+    }
+    #giftToggle:checked ~ #giftOverlay {
+      opacity: 1; visibility: visible; pointer-events: auto;
+    }
+    #giftToggle:checked ~ #giftOverlay .dialog {
+      transform: translateY(0) scale(1);
+    }
+    #giftToggle:checked ~ #giftOverlay .voucher {
+      animation: cardReveal .53s cubic-bezier(.2,.8,.2,1) both;
+    }
+    label[for="giftToggle"] { cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent; }
+    label[for="giftToggle"]:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+
+    /* Mobile polish: comfortable touch targets, proper safe areas, and a dialog
+       that remains accessible on smaller iPhones and Android devices. */
+    @media (max-width: 740px) {
+      .topline { padding-top: max(20px, env(safe-area-inset-top)); }
+      .main { padding-bottom: 34px; }
+      .copy { min-width: 0; }
+      .hello { overflow-wrap: anywhere; }
+      .preview-trigger { min-height: 44px; }
+      .gift-cta { min-height: 52px; }
+      .bottomline { padding-bottom: max(23px, env(safe-area-inset-bottom)); }
+      .overlay { padding: 14px; }
+      .dialog {
+        width: 100%;
+        max-height: calc(100vh - 28px);
+        max-height: calc(100dvh - 28px);
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
+        padding: 26px 22px 23px;
+      }
+      .dialog h2 { font-size: clamp(27px, 7.8vw, 39px); }
+      .dialog-description { font-size: 12px; line-height: 1.65; margin: 11px auto 17px; }
+      .voucher { min-height: 157px; padding: 18px 20px; }
+      .voucher-main { margin-top: 22px; font-size: clamp(26px, 7.5vw, 32px); }
+      .redeem { margin: 17px 0 8px; }
+      .close { width: 44px; height: 44px; top: 9px; right: 9px; }
+      .modal-kicker { margin-top: 10px; }
+      .editor-actions { flex-wrap: wrap; }
+      .editor-actions .gift-cta, .editor-actions .secondary { min-height: 48px; }
+    }
+    @media (max-width: 380px) {
+      .main { padding-top: 36px; }
+      .eyebrow { letter-spacing: .19em; }
+      .dialog { padding: 19px 17px 18px; }
+      .dialog h2 { font-size: 28px; }
+      .dialog-description { font-size: 11px; margin: 9px auto 12px; }
+      .voucher { min-height: 143px; padding: 15px 17px; }
+      .voucher-main { font-size: 26px; margin-top: 16px; }
+      .voucher-bottom { margin-top: 7px; }
+      .redeem { margin: 11px 0 5px; }
+      .demo-hint { line-height: 1.45; }
+      .editor-dialog label { margin-top: 18px; }
+    }
+    @media (max-height: 560px) and (max-width: 740px) {
+      .overlay { align-items: flex-start; overflow-y: auto; }
+      .dialog { flex-shrink: 0; }
+    }
+  </style>
+</head>
+<body>
+  <!-- CSS-powered gift toggle. Unlike fragment links, it never changes the URL
+       or scrolls the underlying greeting when opened or closed. -->
+  <input type="checkbox" id="giftToggle" class="gift-toggle" aria-label="Show gift" tabindex="-1" />
+  <div class="page">
+    <div class="sparkle-field" id="sparkles" aria-hidden="true"></div>
+    <div class="hangers" aria-hidden="true"><span class="hanging h1"></span><span class="hanging h2"></span><span class="hanging h3"></span><span class="hanging h4"></span></div>
+    <header class="topline">
+      <a class="brand" href="#main" aria-label="Back to greeting">
+        <svg class="brand-symbol" viewBox="0 0 36 36" fill="none" aria-hidden="true"><path d="M18 3c3.1 5.3 3.9 8.3 0 12.4-3.9-4.1-3.1-7.1 0-12.4Z" stroke="#F1C47B" stroke-width="1.4"/><path d="M33 18c-5.3 3.1-8.3 3.9-12.4 0 4.1-3.9 7.1-3.1 12.4 0ZM18 33c-3.1-5.3-3.9-8.3 0-12.4 3.9 4.1 3.1 7.1 0 12.4ZM3 18c5.3-3.1 8.3-3.9 12.4 0-4.1 3.9-7.1 3.1-12.4 0Z" stroke="#F1C47B" stroke-width="1.4"/><circle cx="18" cy="18" r="3" fill="#F1C47B"/></svg>
+        <span class="brand-name"><strong id="brandText">AADTECH</strong><span>FESTIVE GREETINGS</span></span>
+      </a>
+      <div class="header-right"><span class="edition">THE FESTIVAL OF LIGHTS · 2026</span><button id="editButton" class="preview-trigger" type="button" aria-label="Personalize greeting"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m16 5 3 3M4 20l4.4-.8L19 8.6a2.12 2.12 0 0 0-3-3L5.4 16.2 4 20Z"/></svg><span>PERSONALIZE</span></button></div>
+    </header>
+    <main class="main" id="main">
+      <section class="copy" aria-labelledby="greeting-title">
+        <div class="eyebrow">A FESTIVE NOTE, JUST FOR YOU</div>
+        <p class="hello">Hi <span id="recipientName">Mayank</span>,</p>
+        <h1 id="greeting-title"><span>Happy</span><span class="golden">Diwali.</span></h1>
+        <p class="desc">Here's to brighter beginnings, beautiful moments, and all the little things that make life glow. Wishing you and your loved ones a season full of happiness and prosperity.</p>
+        <div class="divider" aria-hidden="true"></div>
+        <div class="gift-area" id="giftSection">
+          <div class="gift-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10h18v11H3zM2 6h20v4H2zM12 6v15M12 6H8a2 2 0 0 1-2-2c0-1.1.9-2 2-2 2.4 0 4 4 4 4ZM12 6h4a2 2 0 0 0 2-2c0-1.1-.9-2-2-2-2.4 0-4 4-4 4Z"/></svg></div>
+          <div class="gift-copy"><strong>A little something for you</strong><p>Your Amazon gift card is here. A small gift with our warmest wishes.</p></div>
+          <label class="gift-cta" id="revealButton" for="giftToggle" role="button" tabindex="0" aria-controls="giftOverlay" aria-expanded="false">Unwrap gift <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></label>
+        </div>
+      </section>
+      <div class="art" aria-hidden="true">
+        <div class="art-halo"></div>
+        <svg class="art-svg" viewBox="0 0 640 640" xmlns="http://www.w3.org/2000/svg" fill="none">
+          <defs>
+            <linearGradient id="ringG" x1="110" y1="140" x2="510" y2="505" gradientUnits="userSpaceOnUse"><stop stop-color="#DCAD70" stop-opacity=".1"/><stop offset=".35" stop-color="#E8BC78" stop-opacity=".7"/><stop offset=".7" stop-color="#CC9861" stop-opacity=".25"/><stop offset="1" stop-color="#F2C686" stop-opacity=".75"/></linearGradient>
+            <linearGradient id="bowl" x1="200" y1="331" x2="420" y2="483" gradientUnits="userSpaceOnUse"><stop stop-color="#AB532F"/><stop offset=".45" stop-color="#DE8C4C"/><stop offset="1" stop-color="#8E4029"/></linearGradient>
+            <linearGradient id="lip" x1="165" y1="357" x2="474" y2="381" gradientUnits="userSpaceOnUse"><stop stop-color="#FBE0A1"/><stop offset=".45" stop-color="#DFA15D"/><stop offset="1" stop-color="#FCDA94"/></linearGradient>
+            <linearGradient id="fire" x1="286" y1="140" x2="352" y2="336" gradientUnits="userSpaceOnUse"><stop stop-color="#FFF3BD"/><stop offset=".44" stop-color="#FDD075"/><stop offset="1" stop-color="#F09542"/></linearGradient>
+            <radialGradient id="flameH"><stop stop-color="#EAA550" stop-opacity=".5"/><stop offset="1" stop-color="#EAA550" stop-opacity="0"/></radialGradient>
+            <filter id="blur"><feGaussianBlur stdDeviation="19"/></filter>
+          </defs>
+          <circle cx="320" cy="320" r="270" stroke="url(#ringG)" stroke-width=".95"/>
+          <circle cx="320" cy="320" r="255" stroke="#DCAD70" stroke-opacity=".23" stroke-width=".65" stroke-dasharray="1 10"/>
+          <circle cx="320" cy="320" r="227" stroke="#D1A771" stroke-opacity=".24" stroke-width=".75"/>
+          <circle cx="320" cy="320" r="217" stroke="#D1A771" stroke-opacity=".12" stroke-width=".75"/>
+          <g class="art-orbit" fill="#D9B27A"><circle cx="320" cy="50" r="3"/><circle cx="320" cy="590" r="3"/><circle cx="50" cy="320" r="3"/><circle cx="590" cy="320" r="3"/><circle cx="511" cy="129" r="2"/><circle cx="129" cy="511" r="2"/><circle cx="129" cy="129" r="2"/><circle cx="511" cy="511" r="2"/></g>
+          <g stroke="#C99B64" stroke-opacity=".45" stroke-width=".8">
+            <path d="M320 33v34M320 573v34M33 320h34M573 320h34"/>
+            <path d="m117 117 24 24m358 358 24 24M523 117l-24 24M141 499l-24 24"/>
+            <path d="m308 73 12-13 12 13-12 13-12-13ZM308 567l12-13 12 13-12 13-12-13ZM73 308l13 12-13 12-13-12 13-12ZM567 308l13 12-13 12-13-12 13-12Z"/>
+          </g>
+          <g class="small-stars" fill="#E2B171"><circle cx="160" cy="258" r="1.8"/><circle cx="504" cy="256" r="1.8"/><circle cx="206" cy="151" r="1.6"/><circle cx="439" cy="478" r="1.6"/><circle cx="470" cy="156" r="1.5"/><circle cx="142" cy="426" r="1.5"/></g>
+          <ellipse cx="320" cy="299" rx="123" ry="158" fill="url(#flameH)" filter="url(#blur)" opacity=".45" class="inner-glow"/>
+          <g class="flame-wrap">
+            <path d="M320 155c-22 58-67 98-56 144 8 35 31 53 56 54 34 2 58-24 61-58 4-42-40-75-61-140Z" fill="url(#fire)" opacity=".97"/>
+            <path d="M322 223c-14 33-36 52-30 82 4 24 15 36 29 37 19 0 35-16 36-37 2-25-18-48-35-82Z" fill="#FFF5C0" opacity=".94"/>
+            <path d="M316 274c-7 20-13 29-12 43 0 11 7 17 16 18 12 0 18-9 18-20 0-13-13-30-22-41Z" fill="#FFFEDE"/>
+          </g>
+          <path d="M151 356c40 25 95 38 169 38 74 0 129-13 169-38-17 72-77 129-169 130-92-1-152-58-169-130Z" fill="url(#bowl)"/>
+          <path d="M151 356c89-25 249-25 338 0-40 30-104 45-169 45-65 0-129-15-169-45Z" fill="#A34D2D"/>
+          <path d="M150 356c51 28 108 42 170 42 62 0 119-14 170-42" stroke="url(#lip)" stroke-width="12" stroke-linecap="round"/>
+          <path d="M186 390c28 56 83 89 134 92 57-3 110-36 134-92" stroke="#F3B46B" stroke-width="1.4" opacity=".62"/>
+          <path d="M218 419c52 35 152 35 204 0" stroke="#FAD49C" stroke-opacity=".42"/>
+          <path d="M240 470c46 22 112 22 160 0" stroke="#7D3D29" stroke-width="4" opacity=".6"/>
+          <path d="M267 481v11c0 15 24 28 53 28 29 0 53-13 53-28v-11" fill="#9B472A"/>
+          <path d="M269 494c29 16 73 16 102 0" stroke="#D99C62" stroke-width="3"/>
+          <g stroke="#FFE0A1" stroke-width="2" opacity=".76">
+            <path d="M319 412c-10 15-20 27 0 39 20-12 10-24 0-39Z"/>
+            <path d="M291 419c-9 13-15 22 0 31 15-9 9-18 0-31ZM348 419c-9 13-15 22 0 31 15-9 9-18 0-31Z"/>
+            <path d="M262 424c-7 10-11 16 0 24 11-8 7-14 0-24ZM376 424c-7 10-11 16 0 24 11-8 7-14 0-24Z"/>
+          </g>
+          <g stroke="#E7B77B" stroke-opacity=".48" fill="none">
+            <path d="M184 498c-18 13-40 18-60 12M456 498c18 13 40 18 60 12"/>
+            <path d="M173 523c-11 8-21 12-34 11M467 523c11 8 21 12 34 11"/>
+            <path d="M218 534c30 15 174 15 204 0" stroke-dasharray="2 8"/>
+          </g>
+          <g fill="#E8C088"><circle cx="320" cy="548" r="2.5"/><circle cx="195" cy="211" r="2.2"/><circle cx="445" cy="211" r="2.2"/></g>
+        </svg>
+        <div class="art-caption"><i></i> LIGHT · LOVE · PROSPERITY</div>
+      </div>
+    </main>
+    <footer class="bottomline"><span class="wish">With warmth and gratitude, <span id="senderName">the AADTECH team</span>.</span><span class="footer-note">MADE FOR THE MOMENTS THAT MATTER</span></footer>
+  </div>
+
+  <div class="overlay" id="giftOverlay">
+    <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="giftTitle" aria-describedby="giftDescription">
+      <label class="close" for="giftToggle" role="button" tabindex="0" aria-label="Close gift"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg></label>
+      <div class="modal-kicker">SURPRISE · IT'S FOR YOU</div>
+      <h2 id="giftTitle">A little gift, <em>just for you.</em></h2>
+      <p class="dialog-description" id="giftDescription">Because celebrations are sweeter when shared. Here's wishing you an unforgettable Diwali.</p>
+      <div class="voucher" aria-label="Amazon gift card preview"><div class="voucher-top"><span class="voucher-label">Amazon Gift Card</span><span class="voucher-tag">A FESTIVE GIFT</span></div><div class="voucher-main">Something wonderful<br/>awaits you.</div><div class="voucher-bottom">With best wishes from the team</div></div>
+      <a id="redeemButton" class="gift-cta redeem" href="" hidden rel="noopener noreferrer">Go to your gift <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+      <p class="demo-hint" id="demoHint">Demo preview — add your genuine gift card link in the HTML configuration before sharing.</p>
+    </div>
+  </div>
+
+  <div class="overlay editor-overlay" id="editorOverlay" aria-hidden="true">
+    <div class="dialog editor-dialog" role="dialog" aria-modal="true" aria-labelledby="editorTitle">
+      <button class="close" type="button" data-close="editorOverlay" aria-label="Close personalizer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+      <div class="modal-kicker">MAKE IT PERSONAL</div>
+      <h2 id="editorTitle">For someone special.</h2>
+      <label for="nameInput">Recipient's first name</label>
+      <input class="name-input" id="nameInput" maxlength="32" autocomplete="off" spellcheck="false" placeholder="e.g. Mayank" />
+      <div class="editor-actions"><button type="button" class="gift-cta" id="saveName">Update greeting</button><button type="button" class="secondary" id="copyLink">Copy preview link</button></div>
+      <p class="demo-hint" style="text-align:left;margin:17px 0 0">For a direct personalized link, use <code style="color:#f5cf8c">?name=Mayank</code> at the end of your webpage URL.</p>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script>
+    // -----------------------------------------------
+    // EASY SETUP: change these values before publishing.
+    // -----------------------------------------------
+    const CONFIG = {
+      defaultName: 'Mayank',
+      brand: 'AADTECH',
+      sender: 'the AADTECH team',
+      // Replace with the real destination URL before publishing.
+      // Never put gift-card claim codes/secrets directly in webpage source.
+      giftUrl: '',
+      showPersonalizeButton: true
+    };
+
+    const nameElement = document.getElementById('recipientName');
+    const nameInput = document.getElementById('nameInput');
+    const overlayGift = document.getElementById('giftOverlay');
+    const giftToggle = document.getElementById('giftToggle');
+    const revealButton = document.getElementById('revealButton');
+    const closeGiftButton = overlayGift.querySelector('.close');
+    const overlayEditor = document.getElementById('editorOverlay');
+    const toast = document.getElementById('toast');
+    let toastTimer;
+    let previousFocus = null;
+
+    function cleanName(input) {
+      return String(input || '').normalize('NFKC').replace(/[<>"'`\\]/g, '').replace(/\s+/g, ' ').trim().slice(0,32) || CONFIG.defaultName;
+    }
+    const params = new URLSearchParams(window.location.search);
+    let recipientName = cleanName(params.get('name') || CONFIG.defaultName);
+    function updateName(name, updateUrl = false) {
+      recipientName = cleanName(name);
+      nameElement.textContent = recipientName;
+      nameInput.value = recipientName;
+      document.title = `Happy Diwali, ${recipientName}! | A Festive Surprise`;
+      if (updateUrl) {
+        const url = new URL(window.location.href);
+        url.searchParams.set('name', recipientName);
+        history.replaceState(null, '', url.pathname + url.search + url.hash);
+      }
+    }
+    updateName(recipientName);
+    document.getElementById('brandText').textContent = CONFIG.brand;
+    document.getElementById('senderName').textContent = CONFIG.sender;
+    if (!CONFIG.showPersonalizeButton) document.getElementById('editButton').hidden = true;
+    // A regular anchor navigates in the SAME tab on mobile (no pop-up blocker).
+    // It is shown only if a valid, genuine gift URL has been configured.
+    const redeemLink = document.getElementById('redeemButton');
+    if (CONFIG.giftUrl) {
+      try {
+        const destination = new URL(CONFIG.giftUrl, window.location.href);
+        if (!['https:','http:'].includes(destination.protocol)) throw new Error('Unsupported link');
+        redeemLink.href = destination.href;
+        redeemLink.hidden = false;
+        document.getElementById('demoHint').hidden = true;
+      } catch (error) { /* Keep the gift link hidden if invalid. */ }
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 3400);
+    }
+    function openOverlay(element) {
+      previousFocus = document.activeElement;
+      element.classList.add('open');
+      element.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+      const target = element.querySelector('input,button');
+      if (target) target.focus();
+    }
+    function closeOverlay(element) {
+      element.classList.remove('open');
+      element.setAttribute('aria-hidden','true');
+      if (![overlayGift,overlayEditor].some(x => x.classList.contains('open'))) document.body.style.overflow = '';
+      if (previousFocus && previousFocus.focus) previousFocus.focus();
+    }
+    function syncGiftToggle() {
+      revealButton.setAttribute('aria-expanded', String(giftToggle.checked));
+      if (giftToggle.checked) closeGiftButton.focus({preventScroll: true});
+      else revealButton.focus({preventScroll: true});
+    }
+    giftToggle.addEventListener('change', syncGiftToggle);
+    [revealButton, closeGiftButton].forEach(label => label.addEventListener('keydown', event => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault(); giftToggle.checked = !giftToggle.checked;
+        syncGiftToggle();
+      }
+    }));
+    document.getElementById('editButton').addEventListener('click', () => openOverlay(overlayEditor));
+    document.querySelectorAll('[data-close]').forEach(button => button.addEventListener('click', () => closeOverlay(document.getElementById(button.dataset.close))));
+    overlayEditor.addEventListener('click', event => {if (event.target === overlayEditor) closeOverlay(overlayEditor)});
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape') {if (giftToggle.checked) {giftToggle.checked = false;syncGiftToggle();}if (overlayEditor.classList.contains('open')) closeOverlay(overlayEditor);}
+      if (event.key === 'Tab') {
+        const open = overlayEditor.classList.contains('open') ? overlayEditor : (giftToggle.checked ? overlayGift : null);
+        if (!open) return;
+        const controls = [...open.querySelectorAll('button:not([disabled]),input:not([disabled]),label[tabindex="0"],a[href]:not([hidden])')];
+        if (!controls.length) return;
+        if (event.shiftKey && document.activeElement === controls[0]) {event.preventDefault();controls[controls.length-1].focus();}
+        else if (!event.shiftKey && document.activeElement === controls[controls.length-1]) {event.preventDefault();controls[0].focus();}
+      }
+    });
+    document.getElementById('saveName').addEventListener('click', () => {updateName(nameInput.value,true);closeOverlay(overlayEditor);showToast(`Greeting personalized for ${recipientName}`)});
+    nameInput.addEventListener('keydown', event => {if(event.key === 'Enter') document.getElementById('saveName').click()});
+    document.getElementById('copyLink').addEventListener('click', async () => {
+      updateName(nameInput.value,true);
+      try {
+        await navigator.clipboard.writeText(window.location.href);
+        showToast('Personalized preview link copied');
+      } catch (error) {showToast('Preview URL updated — copy it from the address bar');}
+    });
+    const sparkleField = document.getElementById('sparkles');
+    const points = [ [62,24,2],[74,18,3],[83,25,2],[94,38,2],[57,40,2],[71,58,3],[90,63,2],[52,83,2],[80,86,2],[64,75,2],[98,82,2],[43,13,2],[19,75,1],[37,91,2],[96,12,1],[55,16,2],[89,8,2],[68,42,1],[32,19,1],[96,53,1],[88,91,2],[16,40,1] ];
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      points.forEach(([x,y,s],i) => {
+        const dot = document.createElement('span');
+        dot.className = 'sparkle' + (i % 5 === 0 ? ' cross' : '');
+        dot.style.cssText = `--x:${x}%;--y:${y}%;--s:${s}px;--t:${3.2+(i%6)*.8}s;--d:-${(i*1.07)%6}s`;
+        sparkleField.append(dot);
+      });
+    }
+  </script>
+</body>
+</html>
