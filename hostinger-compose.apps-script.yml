@@ -7,7 +7,7 @@ services:
     container_name: diwali-gift-site
     restart: unless-stopped
     environment:
-      APPS_SCRIPT_URL: ${APPS_SCRIPT_URL:?Set the deployed Google Apps Script URL}
+      APPS_SCRIPT_URL: https://script.google.com/macros/s/AKfycbwBWeYgy0sFM05dJwQN6vzep4023qEwsshUWwSJJsQCeU1MU4KyWiYyrmgZ-LtGSRVK/exec
       APPS_SCRIPT_SECRET: ${APPS_SCRIPT_SECRET:?Set 64-character hex bridge secret}
       TRUSTED_ORIGIN: https://wishes.aadtechgroup.com
     networks:
