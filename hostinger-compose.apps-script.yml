@@ -1,0 +1,19 @@
+# Example replacement for the existing Hostinger GHCR deployment.
+# Keep your actual Nginx Proxy Manager network name and HTTPS proxy host.
+# APPS_SCRIPT_URL and APPS_SCRIPT_SECRET must be configured on the VPS only.
+services:
+  diwali:
+    image: ghcr.io/rajivnexgen/diwali-wish:latest
+    container_name: diwali-gift-site
+    restart: unless-stopped
+    environment:
+      APPS_SCRIPT_URL: ${APPS_SCRIPT_URL:?Set the deployed Google Apps Script URL}
+      APPS_SCRIPT_SECRET: ${APPS_SCRIPT_SECRET:?Set 64-character hex bridge secret}
+      TRUSTED_ORIGIN: https://wishes.aadtechgroup.com
+    networks:
+      - npm_proxy
+
+networks:
+  npm_proxy:
+    external: true
+    name: ${NPM_NETWORK:?Existing Nginx Proxy Manager Docker network name}
