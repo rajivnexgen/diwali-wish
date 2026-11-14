@@ -1,7 +1,8 @@
-
 name: Publish Diwali Docker Image
 
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -11,10 +12,14 @@ permissions:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@v3
 
       - name: Login to GitHub Registry
         uses: docker/login-action@v3
@@ -29,6 +34,74 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ghcr.io/rajivnexgen/diwali-wish:latest
+          pull: true
+          tags: |
+            ghcr.io/rajivnexgen/diwali-wish:latest
+            ghcr.io/rajivnexgen/diwali-wish:sha-${{ github.sha }}
           labels: |
             org.opencontainers.image.source=https://github.com/rajivnexgen/diwali-wish
+
+      - name: Summarize publication
+        run: |
+          echo "Image published: ghcr.io/rajivnexgen/diwali-wish:latest" >> "$GITHUB_STEP_SUMMARY"
+          echo "Hostinger updates only after the existing container is pulled and recreated." >> "$GITHUB_STEP_SUMMARY"
+
+  deploy_hostinger:
+    name: Update Hostinger Docker (opt-in)
+    needs: publish
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      AUTO_DEPLOY_HOSTINGER: ${{ vars.AUTO_DEPLOY_HOSTINGER }}
+      DEPLOY_PATH: ${{ vars.DEPLOY_PATH }}
+      DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+      DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+      DEPLOY_PORT: ${{ secrets.DEPLOY_PORT }}
+      DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+      DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+    steps:
+      - name: Confirm opt-in and deployment settings
+        id: gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "$AUTO_DEPLOY_HOSTINGER" != "true" ]]; then
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Image published. VPS deployment skipped until AUTO_DEPLOY_HOSTINGER=true and SSH credentials are configured."
+            exit 0
+          fi
+          for name in DEPLOY_HOST DEPLOY_USER DEPLOY_SSH_KEY DEPLOY_KNOWN_HOSTS; do
+            if [[ -z "${!name:-}" ]]; then
+              echo "::error::Missing GitHub Actions secret $name"
+              exit 1
+            fi
+          done
+          port="${DEPLOY_PORT:-22}"
+          [[ "$port" =~ ^[0-9]+$ ]] || { echo "::error::Invalid DEPLOY_PORT"; exit 1; }
+          echo "enabled=true" >> "$GITHUB_OUTPUT"
+
+      - name: Configure verified SSH
+        if: steps.gate.outputs.enabled == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          install -m 700 -d "$HOME/.ssh"
+          printf '%s\n' "$DEPLOY_SSH_KEY" > "$HOME/.ssh/id_ed25519"
+          printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > "$HOME/.ssh/known_hosts"
+          chmod 600 "$HOME/.ssh/id_ed25519" "$HOME/.ssh/known_hosts"
+
+      - name: Pull and recreate existing Diwali container
+        if: steps.gate.outputs.enabled == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          path="${DEPLOY_PATH:-/opt/diwali-gift}"
+          [[ "$path" == /* ]] || { echo "::error::DEPLOY_PATH must be absolute"; exit 1; }
+          printf -v remote_path '%q' "$path"
+          port="${DEPLOY_PORT:-22}"
+          ssh -i "$HOME/.ssh/id_ed25519" -o BatchMode=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=20 -p "$port" \
+            "$DEPLOY_USER@$DEPLOY_HOST" \
+            "cd $remote_path && docker compose config --images | grep -Fxq 'ghcr.io/rajivnexgen/diwali-wish:latest' && docker compose pull diwali && docker compose up -d --no-deps --force-recreate diwali && docker compose ps diwali" || {
+              echo "::error::Check DEPLOY_PATH: existing Compose project must use the GHCR latest image and permit Docker pulls."
+              exit 1
+            }
