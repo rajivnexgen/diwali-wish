@@ -1,9 +1,12 @@
-# Docker environment & secrets are configured only on the VPS.
+# Local files, deployment credentials and secrets
 .env
 .env.*
 !.env.example
 *.pem
 *.key
 *.pub
+*service-account*.json
+*credentials*.json
 .DS_Store
 __pycache__/
+.venv/

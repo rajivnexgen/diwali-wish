@@ -6,3 +6,9 @@
 .gitignore
 README.md
 *.zip
+*service-account*.json
+*credentials*.json
+*.pem
+*.key
+__pycache__
+.venv

@@ -1,0 +1,15 @@
+# Voucher-capable Hostinger deployment: use ONLY after configuring the Google
+# service account and sharing the private Sheet with its client_email (Editor).
+# Keep service-account.json on VPS only; NEVER commit it or upload it to GitHub.
+services:
+  diwali:
+    image: ghcr.io/rajivnexgen/diwali-wish:latest
+    container_name: diwali-gift-site
+    restart: unless-stopped
+    environment:
+      GOOGLE_SHEET_ID: "13OGBaycDMzoOGlykcDJToU1LVilRVRJwwldTKy5RXrg"
+      GOOGLE_APPLICATION_CREDENTIALS: /run/secrets/google-service-account.json
+      TRUSTED_ORIGIN: https://wishes.aadtechgroup.com
+    volumes:
+      - /opt/diwali-gift/service-account.json:/run/secrets/google-service-account.json:ro
+    # Connect to the same private Nginx Proxy Manager Docker network used today.
